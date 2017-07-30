@@ -3,26 +3,41 @@
   <h1>
     Welcome to {{title}}!
   </h1>
-  <img width="100" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAyNTAgMjUwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAyNTAgMjUwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDojREQwMDMxO30NCgkuc3Qxe2ZpbGw6I0MzMDAyRjt9DQoJLnN0MntmaWxsOiNGRkZGRkY7fQ0KPC9zdHlsZT4NCjxnPg0KCTxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iMTI1LDMwIDEyNSwzMCAxMjUsMzAgMzEuOSw2My4yIDQ2LjEsMTg2LjMgMTI1LDIzMCAxMjUsMjMwIDEyNSwyMzAgMjAzLjksMTg2LjMgMjE4LjEsNjMuMiAJIi8+DQoJPHBvbHlnb24gY2xhc3M9InN0MSIgcG9pbnRzPSIxMjUsMzAgMTI1LDUyLjIgMTI1LDUyLjEgMTI1LDE1My40IDEyNSwxNTMuNCAxMjUsMjMwIDEyNSwyMzAgMjAzLjksMTg2LjMgMjE4LjEsNjMuMiAxMjUsMzAgCSIvPg0KCTxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0xMjUsNTIuMUw2Ni44LDE4Mi42aDBoMjEuN2gwbDExLjctMjkuMmg0OS40bDExLjcsMjkuMmgwaDIxLjdoMEwxMjUsNTIuMUwxMjUsNTIuMUwxMjUsNTIuMUwxMjUsNTIuMQ0KCQlMMTI1LDUyLjF6IE0xNDIsMTM1LjRIMTA4bDE3LTQwLjlMMTQyLDEzNS40eiIvPg0KPC9nPg0KPC9zdmc+DQo=">
 </div>
-<h1>{{ ding | async | json }}</h1>
-<input type="text" #newname placeholder="Name" />
-  <input type="number" #newsize placeholder="Size" />
-  <br />
-  <button (click)="save(newname.value)">Set Name</button>
-  <button (click)="update(newsize.value)">Update Size</button>
-  <button (click)="delete()">Delete</button>
 
-<h2>Results </h2>
+<h2>Auth - Email/Password</h2>
+<em> {{ (user | async) | json }} </em>
+<input type="text" #email placeholder="Email" />
+<input type="password" #password placeholder="Password" />
+<br />
+<button (click)="createUser(email.value, password.value)">Create User</button>
+<button (click)="signInUser(email.value, password.value)">Sign in</button>
+<pre>{{ errorUser | json }}</pre>
+
+<h2>Auth - Google</h2>
+<em> {{ (user | async)?.displayName }} </em>
+<button (click)="login()">Login</button>
+<button (click)="logout()">Logout</button>
+
+<h2>Realtime DB - Item</h2>
+<em>{{ ding | async | json }}</em>
+<input type="text" #newname placeholder="Name" />
+<input type="number" #newsize placeholder="Size" />
+<br />
+<button (click)="save(newname.value)">Set Name</button>
+<button (click)="update(newsize.value)">Update Size</button>
+<button (click)="delete()">Delete</button>
+
+<h2>Realtime DB - List</h2>
 <ul>
-    <li *ngFor="let item of items | async">
-      <input type="text" #updatetext [value]="item.text" />
-      <button (click)="updateItem(item.$key, updatetext.value)">Update</button>
-      <button (click)="deleteItem(item.$key)">Delete</button>
-    </li>
-  </ul>
-  <input type="text" #newitem />
-  <button (click)="addItem(newitem.value)">Add</button>
-  <button (click)="deleteEverything()">Delete All</button>
+  <li *ngFor="let item of items | async">
+    <input type="text" #updatetext [value]="item.text" />
+    <button (click)="updateItem(item.$key, updatetext.value)">Update</button>
+    <button (click)="deleteItem(item.$key)">Delete</button>
+  </li>
+</ul>
+<input type="text" #newitem />
+<button (click)="addItem(newitem.value)">Add</button>
+<button (click)="deleteEverything()">Delete All</button>
 
 <router-outlet></router-outlet>
